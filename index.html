@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101126">
+<title>English Hub | Term 1</title>
+
+<style>
+:root{
+  --bg:#0b0c19;
+  --panel:#141629;
+  --panel2:#1b1e35;
+  --line:#2c304b;
+  --text:#f5f5ff;
+  --muted:#a4a8c2;
+  --purple:#a78bfa;
+  --cyan:#67e8f9;
+  --pink:#f0abfc;
+  --green:#86efac;
+  --yellow:#fcd34d;
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse at 10% 0%,#292052 0,transparent 36%),
+    radial-gradient(ellipse at 95% 15%,#103347 0,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.65;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+::selection{background:#a78bfa;color:#111}
+
+.app{min-height:100vh}
+.sidebar{
+  position:fixed;inset:0 auto 0 0;width:260px;
+  padding:25px 17px;
+  background:#101123ee;
+  border-right:1px solid var(--line);
+  backdrop-filter:blur(20px);
+  z-index:20;overflow-y:auto;
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 10px 27px;
+}
+.brand-icon{
+  width:45px;height:45px;border-radius:14px;
+  display:grid;place-items:center;font-size:23px;
+  background:linear-gradient(135deg,#a78bfa,#67e8f9);
+  color:#101126;font-weight:900;
+  box-shadow:0 8px 30px #a78bfa40;
+}
+.brand h2{font-size:17px;margin:0;letter-spacing:.5px}
+.brand small{display:block;color:var(--muted);font-size:11px}
+.nav-label{
+  font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:#777d9e;font-weight:800;padding:15px 12px 8px;
+}
+.nav-link{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:12px 13px;margin:3px 0;
+  border:1px solid transparent;border-radius:12px;
+  color:#b8bdd4;background:transparent;text-align:left;
+  font-size:13px;font-weight:650;transition:.2s;
+}
+.nav-link:hover,.nav-link.active{
+  background:linear-gradient(90deg,#a78bfa20,#67e8f910);
+  color:white;border-color:#a78bfa35;
+}
+.nav-link.active{box-shadow:inset 3px 0 var(--purple)}
+.nav-icon{width:22px;text-align:center;font-size:17px}
+.sidebar-bottom{
+  margin-top:30px;padding:17px;border:1px solid var(--line);
+  border-radius:16px;background:#ffffff06;
+}
+.sidebar-bottom strong{font-size:13px}
+.sidebar-bottom p{font-size:11px;color:var(--muted);margin:5px 0 12px}
+.progress-track{
+  height:7px;background:#30334d;border-radius:20px;overflow:hidden;
+}
+.progress-fill{
+  width:0;height:100%;border-radius:20px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  transition:width .4s;
+}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:8px}
+
+.main{margin-left:260px;min-height:100vh}
+.topbar{
+  height:72px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 36px;border-bottom:1px solid #ffffff12;
+  background:#0b0c19aa;backdrop-filter:blur(18px);
+  position:sticky;top:0;z-index:10;
+}
+.breadcrumb{font-size:13px;color:var(--muted)}
+.breadcrumb b{color:white}
+.top-actions{display:flex;align-items:center;gap:12px}
+.pill{
+  border:1px solid var(--line);border-radius:30px;
+  padding:8px 13px;font-size:12px;color:#d6d7e9;background:#ffffff06;
+}
+.menu-btn{display:none}
+.content{max-width:1250px;margin:auto;padding:35px 36px 80px}
+
+.hero{
+  min-height:300px;padding:38px;
+  border:1px solid #a78bfa35;border-radius:26px;
+  background:
+    radial-gradient(circle at 85% 20%,#67e8f930,transparent 30%),
+    radial-gradient(circle at 75% 100%,#a78bfa35,transparent 40%),
+    linear-gradient(125deg,#211b3c,#17192e 65%,#122c3a);
+  position:relative;overflow:hidden;
+}
+.hero:after{
+  content:"Aa";position:absolute;right:6%;top:12%;
+  font-family:Georgia,serif;font-size:190px;font-weight:900;
+  color:#ffffff08;line-height:1;pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid #a78bfa55;background:#a78bfa16;
+  color:#d8caff;border-radius:30px;padding:7px 12px;
+  font-size:11px;font-weight:800;letter-spacing:1px;
+}
+.hero h1{
+  font-size:clamp(34px,5vw,58px);line-height:1.08;
+  margin:20px 0 12px;letter-spacing:-2px;
+}
+.gradient-text{
+  background:linear-gradient(90deg,#c4b5fd,#67e8f9);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{max-width:650px;color:#c1c4d8;font-size:15px}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{
+  border:1px solid transparent;border-radius:12px;
+  padding:12px 18px;font-weight:750;font-size:13px;
+  transition:.2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{
+  color:#111226;background:linear-gradient(100deg,#c4b5fd,#67e8f9);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px #67e8f930}
+.btn-ghost{background:#ffffff0c;border-color:#ffffff25;color:white}
+.btn-ghost:hover{background:#ffffff18}
+
+.section-heading{
+  display:flex;justify-content:space-between;align-items:end;
+  gap:15px;margin:38px 0 17px;
+}
+.section-heading h2{font-size:22px;margin:0;letter-spacing:-.5px}
+.section-heading p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.eyebrow{font-size:10px;letter-spacing:2px;color:var(--cyan);font-weight:900;text-transform:uppercase}
+
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px;
+}
+.stat-card{
+  padding:18px;border:1px solid var(--line);border-radius:17px;
+  background:linear-gradient(145deg,#1b1e35,#141629);
+}
+.stat-top{display:flex;justify-content:space-between;align-items:center}
+.stat-icon{
+  width:37px;height:37px;border-radius:11px;display:grid;place-items:center;
+  background:#a78bfa19;font-size:18px;
+}
+.stat-card strong{display:block;font-size:27px;margin-top:12px}
+.stat-card small{font-size:11px;color:var(--muted)}
+.stat-card .accent{color:var(--cyan)}
+
+.search-wrap{position:relative;max-width:450px;width:100%}
+.search-wrap span{position:absolute;left:14px;top:10px;color:#8d92ac}
+.search{
+  width:100%;padding:12px 15px 12px 42px;
+  border:1px solid var(--line);border-radius:12px;
+  background:#17192d;color:white;outline:none;font-size:13px;
+}
+.search:focus{border-color:var(--purple);box-shadow:0 0 0 3px #a78bfa18}
+
+.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.topic-card{
+  border:1px solid var(--line);border-radius:18px;
+  padding:20px;background:linear-gradient(145deg,#1b1e35,#131526);
+  min-height:190px;display:flex;flex-direction:column;
+  transition:transform .22s,border-color .22s,box-shadow .22s;
+  position:relative;overflow:hidden;
+}
+.topic-card:before{
+  content:"";position:absolute;width:110px;height:110px;
+  right:-40px;top:-40px;border-radius:50%;
+  background:var(--glow,#a78bfa);opacity:.09;filter:blur(5px);
+}
+.topic-card:hover{transform:translateY(-4px);border-color:#a78bfa88;box-shadow:0 12px 35px #0004}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.card-icon{
+  width:43px;height:43px;border-radius:13px;display:grid;place-items:center;
+  background:#a78bfa1d;font-size:21px;
+}
+.card-number{font-size:11px;color:#a7abc4;font-weight:800;letter-spacing:1px}
+.topic-card h3{font-size:17px;margin:16px 0 6px}
+.topic-card p{font-size:12px;color:var(--muted);margin:0 0 18px}
+.card-bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center}
+.card-bottom span{font-size:11px;color:#a9aec7}
+.card-arrow{color:var(--cyan);font-size:18px}
+.done-mark{color:var(--green);font-size:12px;font-weight:800}
+
+.panel{
+  border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(145deg,#1a1d33,#121425);
+  padding:24px;margin-top:20px;
+}
+.panel h3{margin:0 0 8px}
+.panel p{color:#b7bbd1;font-size:13px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.feature{
+  padding:18px;border:1px solid var(--line);border-radius:15px;background:#ffffff04;
+}
+.feature h4{margin:0 0 7px;font-size:14px}
+.feature p{margin:0;font-size:12px}
+.callout{
+  border-left:3px solid var(--cyan);background:#67e8f90c;
+  border-radius:0 12px 12px 0;padding:14px 17px;margin:16px 0;
+}
+.callout strong{color:var(--cyan)}
+.callout p{margin:5px 0 0}
+.example{
+  border:1px solid #a78bfa35;background:#a78bfa0c;
+  border-radius:12px;padding:15px;margin:12px 0;
+}
+.example-label{font-size:10px;color:#c4b5fd;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.example p{color:#f0efff;margin:7px 0 0}
+.lesson-content h3{color:#c4b5fd;margin:26px 0 8px;font-size:18px}
+.lesson-content h4{color:var(--cyan);margin:20px 0 5px}
+.lesson-content p,.lesson-content li{color:#c4c7da;font-size:14px}
+.lesson-content ul,.lesson-content ol{padding-left:23px}
+.lesson-content li{margin:6px 0}
+.lesson-content strong{color:white}
+.lesson-content table{width:100%;border-collapse:collapse;margin:15px 0;font-size:13px}
+.lesson-content th,.lesson-content td{border:1px solid var(--line);padding:11px;text-align:left}
+.lesson-content th{background:#a78bfa16;color:#ddd4ff}
+.lesson-content td{color:#c4c7da}
+.lesson-content blockquote{
+  margin:15px 0;padding:14px 18px;border-left:3px solid var(--purple);
+  background:#ffffff08;color:#d4d6e8;border-radius:0 10px 10px 0;
+}
+.lesson-head{
+  padding:28px;border:1px solid #a78bfa35;border-radius:20px;
+  background:linear-gradient(120deg,#272044,#18243a);
+}
+.lesson-head .eyebrow{color:var(--cyan)}
+.lesson-head h1{font-size:clamp(26px,4vw,39px);margin:8px 0}
+.lesson-head p{color:#c1c4d8;margin:0}
+.lesson-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.lesson-content{
+  border:1px solid var(--line);border-radius:18px;
+  background:#15172a;padding:26px;margin-top:16px;
+}
+.back-btn{background:#ffffff08;border:1px solid var(--line);color:#ddd;padding:10px 14px;border-radius:10px}
+.hidden{display:none!important}
+
+.practice-area textarea{
+  width:100%;min-height:180px;resize:vertical;
+  background:#101224;color:white;border:1px solid var(--line);
+  border-radius:12px;padding:15px;outline:none;
+}
+.practice-area textarea:focus{border-color:var(--purple)}
+.word-count{font-size:12px;color:var(--muted);margin:8px 0 15px}
+.prompt-box{padding:17px;border-radius:13px;background:#a78bfa12;border:1px solid #a78bfa35;margin:14px 0}
+.prompt-box strong{color:#d8caff}
+.quiz-question{
+  padding:20px 0;border-bottom:1px solid var(--line);
+}
+.quiz-question h3{font-size:15px;margin:0 0 12px}
+.answer{
+  display:block;width:100%;text-align:left;padding:12px 14px;
+  margin:7px 0;border:1px solid var(--line);border-radius:10px;
+  color:#d5d7e8;background:#ffffff05;font-size:13px;
+}
+.answer:hover{border-color:var(--purple);background:#a78bfa12}
+.answer.selected{border-color:var(--cyan);background:#67e8f916}
+.answer.correct{border-color:var(--green);background:#86efac12}
+.answer.wrong{border-color:#fb7185;background:#fb718512}
+.quiz-feedback{font-size:12px;color:var(--muted);margin-top:8px}
+.quiz-result{
+  display:none;padding:22px;border:1px solid #67e8f955;
+  border-radius:15px;background:#67e8f90d;margin-top:20px;
+}
+.quiz-result strong{font-size:26px;color:var(--cyan)}
+.empty{padding:35px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:15px}
+.footer{
+  text-align:center;border-top:1px solid var(--line);
+  color:#777d9e;font-size:11px;padding:25px;margin-top:40px;
+}
+.footer strong{color:#c4b5fd}
+
+@media(max-width:1050px){
+  .topic-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
+  .sidebar.open{transform:translateX(0);box-shadow:20px 0 60px #0008}
+  .main{margin-left:0}
+  .menu-btn{display:block;background:#ffffff0c;border:1px solid var(--line);color:white;border-radius:9px;padding:8px 11px}
+  .topbar{padding:0 17px}
+  .content{padding:20px 16px 60px}
+  .hero{padding:25px;min-height:270px}
+  .hero:after{font-size:130px;right:3%}
+  .topic-grid{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .section-heading{align-items:start;flex-direction:column}
+  .search-wrap{max-width:none}
+  .lesson-content{padding:18px}
+}
+@media(max-width:420px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:9px}
+  .stat-card{padding:13px}
+  .stat-card strong{font-size:23px}
+  .hero h1{letter-spacing:-1px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-icon">E</div>
+    <div>
+      <h2>ENGLISH HUB</h2>
+      <small>TERM 1 · LEARNING STUDIO</small>
+    </div>
+  </div>
+
+  <div class="nav-label">Workspace</div>
+  <button class="nav-link active" data-page="home"><span class="nav-icon">⌂</span> Dashboard</button>
+  <button class="nav-link" data-page="lessons"><span class="nav-icon">▤</span> All Lessons</button>
+  <button class="nav-link" data-page="grammar"><span class="nav-icon">Aa</span> Grammar Lab</button>
+  <button class="nav-link" data-page="writing"><span class="nav-icon">✎</span> Writing Studio</button>
+  <button class="nav-link" data-page="quiz"><span class="nav-icon">◈</span> Knowledge Quiz</button>
+
+  <div class="nav-label">Your syllabus</div>
+  <button class="nav-link" data-topic="psa"><span class="nav-icon">📢</span> Public Service Announcement</button>
+  <button class="nav-link" data-topic="adventure"><span class="nav-icon">🧭</span> Adventure</button>
+  <button class="nav-link" data-topic="hey"><span class="nav-icon">📖</span> Hey You Down There</button>
+  <button class="nav-link" data-topic="film"><span class="nav-icon">🎬</span> Film and Fame</button>
+  <button class="nav-link" data-topic="small"><span class="nav-icon">✦</span> Small but Perfect</button>
+  <button class="nav-link" data-topic="unusual"><span class="nav-icon">🎓</span> Unusual Education</button>
+
+  <div class="sidebar-bottom">
+    <strong>✦ Your learning progress</strong>
+    <p>Complete lessons as you study.</p>
+    <div class="progress-track"><div class="progress-fill" id="sideProgress"></div></div>
+    <div class="progress-label"><span id="sideProgressText">0% completed</span><span id="sideCount">0/6</span></div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:13px">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <div class="breadcrumb">Learning Studio / <b id="crumb">Dashboard</b></div>
+    </div>
+    <div class="top-actions">
+      <span class="pill">✦ English · Term 1</span>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <section id="homePage">
+      <div class="hero">
+        <span class="hero-tag">✦ YOUR PERSONAL LEARNING SPACE</span>
+        <h1>Learn. Create.<br><span class="gradient-text">Express yourself.</span></h1>
+        <p>
+          Welcome to English Hub — your complete learning studio for
+          stories, grammar, film, poetry, media and creative writing.
+          Explore every syllabus topic, practise your skills and track
+          your progress at your own pace.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="showPage('lessons')">Explore Lessons <span>→</span></button>
+          <button class="btn btn-ghost" onclick="showPage('quiz')">Take a Quiz ◈</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">📚</span><span class="accent">01</span></div><strong>6</strong><small>Syllabus sections</small></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">✍️</span><span class="accent">02</span></div><strong>9+</strong><small>Writing formats and skills</small></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">Aa</span><span class="accent">03</span></div><strong>10+</strong><small>Grammar concepts</small></div>
+        <div class="stat-card"><div class="stat-top"><span class="stat-icon">◈</span><span class="accent">04</span></div><strong id="homeProgress">0%</strong><small>Learning progress</small></div>
+      </div>
+
+      <div class="section-heading">
+        <div><div class="eyebrow">Your syllabus</div><h2>Choose your next chapter</h2><p>Open a topic to explore its complete study guide.</p></div>
+        <div class="search-wrap"><span>⌕</span><input class="search" id="homeSearch" placeholder="Search lessons..."></div>
+      </div>
+      <div class="topic-grid" id="homeCards"></div>
+
+      <div class="section-heading"><div><div class="eyebrow">Study smarter</div><h2>Inside your learning studio</h2></div></div>
+      <div class="two-col">
+        <div class="feature"><h4>✍️ Creative Writing Studio</h4><p>Practise stories, dialogues, newspaper articles, reviews, flash fiction and poetry with guided prompts.</p><br><button class="btn btn-ghost" onclick="showPage('writing')">Open Writing Studio →</button></div>
+        <div class="feature"><h4>🧠 Grammar Lab</h4><p>Understand sentence structures, verbs, clauses, conjunctions, connectives and adverbials with examples.</p><br><button class="btn btn-ghost" onclick="showPage('grammar')">Enter Grammar Lab →</button></div>
+      </div>
+    </section>
+
+    <!-- ALL LESSONS -->
+    <section id="lessonsPage" class="hidden">
+      <div class="section-heading" style="margin-top:5px">
+        <div><div class="eyebrow">Complete course library</div><h2>All lessons</h2><p>Browse the visible topics from your Term 1 syllabus.</p></div>
+        <div class="search-wrap"><span>⌕</span><input class="search" id="lessonSearch" placeholder="Search the entire course..."></div>
+      </div>
+      <div class="topic-grid" id="lessonCards"></div>
+    </section>
+
+    <!-- LESSON VIEW -->
+    <section id="topicPage" class="hidden">
+      <button class="back-btn" onclick="showPage('lessons')">← Back to all lessons</button>
+      <div class="lesson-head" style="margin-top:18px">
+        <div class="eyebrow" id="lessonEyebrow">TERM 1 STUDY GUIDE</div>
+        <h1 id="lessonTitle"></h1>
+        <p id="lessonDescription"></p>
+      </div>
+      <div class="lesson-toolbar">
+        <button class="btn btn-primary" id="completeBtn" onclick="toggleComplete()">✓ Mark section complete</button>
+        <button class="btn btn-ghost" onclick="window.print()">Print lesson ⎙</button>
+      </div>
+      <article class="lesson-content" id="lessonContent"></article>
+    </section>
+
+    <!-- GRAMMAR -->
+    <section id="grammarPage" class="hidden">
+      <div class="lesson-head">
+        <div class="eyebrow">Language mechanics</div>
+        <h1>Grammar <span class="gradient-text">Lab</span></h1>
+        <p>Build accurate, varied and expressive sentences.</p>
+      </div>
+      <div class="section-heading"><div><h2>Grammar concepts</h2><p>Explore definitions, examples and practical rules.</p></div></div>
+      <div class="topic-grid" id="grammarCards"></div>
+    </section>
+
+    <!-- WRITING -->
+    <section id="writingPage" class="hidden">
+      <div class="lesson-head">
+        <div class="eyebrow">Create something brilliant</div>
+        <h1>Writing <span class="gradient-text">Studio</span></h1>
+        <p>Choose a format, study its structure and practise your own writing.</p>
+      </div>
+      <div class="section-heading"><div><h2>Choose a writing challenge</h2><p>Use the prompts to develop your own original work.</p></div></div>
+      <div class="topic-grid" id="writingCards"></div>
+      <div class="panel practice-area" id="writingPractice">
+        <div class="eyebrow">Your creative workspace</div>
+        <h3 id="writingTitle">Start writing</h3>
+        <div class="prompt-box"><strong>Your prompt</strong><p id="writingPrompt">Select a challenge above to begin.</p></div>
+        <textarea id="writingText" placeholder="Start writing here..."></textarea>
+        <div class="word-count"><span id="wordCount">0 words</span> · Your writing stays in this page while it is open.</div>
+        <button class="btn btn-primary" onclick="copyWriting()">Copy my writing ↗</button>
+        <button class="btn btn-ghost" onclick="clearWriting()">Clear</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quizPage" class="hidden">
+      <div class="lesson-head">
+        <div class="eyebrow">Test your understanding</div>
+        <h1>Knowledge <span class="gradient-text">Quiz</span></h1>
+        <p>Answer questions from your English Term 1 syllabus. Feedback appears after you submit.</p>
+      </div>
+      <div class="panel">
+        <div class="eyebrow">Revision challenge · 15 questions</div>
+        <h2>Ready to test your skills?</h2>
+        <p>Choose one answer for each question. Your score and explanations will appear at the end.</p>
+        <div id="quizQuestions"></div>
+        <button class="btn btn-primary" onclick="submitQuiz()">Submit answers →</button>
+        <button class="btn btn-ghost" onclick="resetQuiz()">Start again</button>
+        <div class="quiz-result" id="quizResult"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <strong>ENGLISH HUB</strong> · TERM 1 LEARNING STUDIO<br>
+      A personal educational project · Built for learning, creativity and revision.
+    </footer>
+  </main>
+</div>
+</div>
+
+<script>
+/* =========================================================
+   ENGLISH HUB — SINGLE FILE LEARNING WEBSITE
+   All lesson content and functionality are included here.
+========================================================= */
+
+const topics = [
+{
+ id:"psa",number:"01",icon:"📢",title:"Public Service Announcement",
+ short:"Inform, persuade and encourage people to take positive action.",
+ description:"Learn how to create a clear, memorable and effective public service announcement.",
+ content:`
+ <h2>What is a Public Service Announcement?</h2>
+ <p>A <strong>Public Service Announcement (PSA)</strong> is a short message designed to inform the public about an important issue and encourage responsible action. PSAs commonly address safety, health, environmental protection, community wellbeing and public awareness.</p>
+ <h3>Purpose and audience</h3>
+ <ul><li><strong>Inform:</strong> Give people accurate and useful information.</li><li><strong>Persuade:</strong> Encourage the audience to change a behaviour or take action.</li><li><strong>Raise awareness:</strong> Help people recognise an issue and understand its importance.</li><li><strong>Audience:</strong> Identify who needs to receive the message and adapt vocabulary and tone accordingly.</li></ul>
+ <h3>Features of an effective PSA</h3>
+ <ol><li><strong>Attention-grabbing headline:</strong> Short, memorable and relevant.</li><li><strong>Clear issue:</strong> Explain the problem without unnecessary detail.</li><li><strong>Relevant facts:</strong> Use accurate information and avoid exaggeration.</li><li><strong>Direct address:</strong> Speak to the audience using “you” or “we” when appropriate.</li><li><strong>Action steps:</strong> Tell the audience exactly what they can do.</li><li><strong>Memorable ending:</strong> Finish with a slogan, appeal or call to action.</li></ol>
+ <h3>Suggested structure</h3>
+ <p><strong>Headline → Hook → Problem → Why it matters → Practical action → Memorable slogan.</strong></p>
+ <div class="example"><span class="example-label">Example · Original PSA</span><p><strong>Every Drop Counts</strong><br>Clean water is precious. Leaving taps running wastes water that communities need every day. Turn off the tap while brushing your teeth, report leaks and use water thoughtfully. Small actions make a meaningful difference. <strong>Save water today. Protect tomorrow.</strong></p></div>
+ <h3>Language techniques</h3>
+ <ul><li>Imperatives: “Switch it off.” “Stay alert.”</li><li>Rhetorical questions: “What would happen if we all ignored the problem?”</li><li>Inclusive language: “Together, we can make a difference.”</li><li>Repetition: Repeat a key phrase for emphasis.</li><li>Emotive language: Use carefully and honestly to show why the issue matters.</li></ul>
+ <h3>Final checklist</h3><ul><li>Is the issue immediately clear?</li><li>Is the information accurate?</li><li>Does the audience know what to do?</li><li>Is the tone suitable?</li><li>Is the ending memorable?</li></ul>`
+},
+{
+ id:"adventure",number:"02",icon:"🧭",title:"Adventure",
+ short:"Explore adventure-story features, suspense, setting and character development.",
+ description:"Understand how writers create exciting stories through danger, discovery and change.",
+ content:`
+ <h2>What is an adventure story?</h2>
+ <p>An adventure story follows a character or group through an exciting journey involving challenges, uncertainty, discovery or danger. The central character usually has a goal and must overcome obstacles to reach it.</p>
+ <h3>Common features</h3>
+ <ul><li><strong>Strong central character:</strong> A person with a goal, motivation or problem.</li><li><strong>Quest or mission:</strong> A journey, rescue, discovery or challenge.</li><li><strong>Unfamiliar setting:</strong> A forest, island, mountain, city or imagined world.</li><li><strong>Obstacles:</strong> Physical challenges, difficult choices or unexpected events.</li><li><strong>Suspense:</strong> The reader wants to know what happens next.</li><li><strong>Conflict:</strong> Character versus nature, another character, society or themselves.</li><li><strong>Resolution:</strong> The main problem is addressed and the character may change.</li></ul>
+ <h3>Planning an adventure story</h3>
+ <ol><li>Choose a protagonist and a clear goal.</li><li>Invent a setting with opportunities and risks.</li><li>Introduce a problem early enough to create interest.</li><li>Build obstacles that become increasingly challenging.</li><li>Include a turning point or climax.</li><li>Resolve the main conflict in a believable way.</li></ol>
+ <h3>Creating suspense</h3>
+ <p>Control the information the reader receives. Use short sentences at tense moments, sensory details, unanswered questions, warnings and carefully timed revelations.</p>
+ <div class="example"><span class="example-label">Example · Suspense</span><p>The rope tightened. Below her, the river thundered through the gorge. Then the old bridge moved.</p></div>
+ <h3>Show, don't just tell</h3>
+ <table><tr><th>Telling</th><th>Showing</th></tr><tr><td>He was frightened.</td><td>His fingers trembled as he reached for the door.</td></tr><tr><td>The forest was dark.</td><td>Branches swallowed the last light, and damp leaves brushed her face.</td></tr></table>
+ <h3>Story structure</h3>
+ <p><strong>Opening:</strong> Establish character, setting and atmosphere.<br><strong>Build-up:</strong> Introduce the mission and complications.<br><strong>Climax:</strong> The most intense moment or decisive choice.<br><strong>Resolution:</strong> Show the outcome and any change in the character.</p>
+ <h3>Useful planning questions</h3><ul><li>What does my character want?</li><li>What stands in the way?</li><li>What makes the setting memorable?</li><li>How will tension increase?</li><li>What will the character learn or discover?</li></ul>`
+},
+{
+ id:"hey",number:"03",icon:"📖",title:"Hey You Down There",
+ short:"Study character development, sentence craft, setting, voice, endings and dialogue.",
+ description:"Explore the story-writing skills listed in your Hey You Down There section.",
+ content:`
+ <h2>Reading and writing focus</h2>
+ <p>This section develops the tools used to understand characters and create effective narrative writing. Use the techniques below when analysing a story or planning your own.</p>
+ <h3>Character development</h3>
+ <p>Character development is the way a character's personality, beliefs, behaviour or understanding is revealed and sometimes changes during a story.</p>
+ <ul><li><strong>Appearance:</strong> What the character looks like, when relevant.</li><li><strong>Actions:</strong> What the character does, especially under pressure.</li><li><strong>Dialogue:</strong> What the character says and how they say it.</li><li><strong>Thoughts:</strong> Private feelings, doubts and decisions.</li><li><strong>Relationships:</strong> How the character treats and responds to others.</li><li><strong>Change:</strong> How experiences influence the character.</li></ul>
+ <div class="example"><span class="example-label">Character development</span><p>At first, Mira avoids every difficult conversation. When her friend is blamed unfairly, she finally speaks up. Her decision reveals courage and marks a change in her behaviour.</p></div>
+ <h3>Sentence types</h3>
+ <p><strong>Simple:</strong> One independent clause. “The door opened.”</p>
+ <p><strong>Compound:</strong> Two independent clauses joined appropriately. “The door opened, and the lights flickered.”</p>
+ <p><strong>Complex:</strong> An independent clause and at least one dependent clause. “When the door opened, the lights flickered.”</p>
+ <p><strong>Compound-complex:</strong> At least two independent clauses and one dependent clause. “When the door opened, the lights flickered, and everyone turned.”</p>
+ <h3>Sentence openings</h3>
+ <ul><li><strong>Adverb:</strong> Suddenly, the lights went out.</li><li><strong>Prepositional phrase:</strong> Behind the curtain, someone moved.</li><li><strong>-ing clause:</strong> Holding her breath, Mira listened.</li><li><strong>Time clause:</strong> As the storm approached, the road emptied.</li><li><strong>Dialogue:</strong> “Did you hear that?” whispered Mira.</li><li><strong>Short statement:</strong> Nothing moved.</li></ul>
+ <h3>Setting and character voice</h3>
+ <p><strong>Setting</strong> includes place, time, atmosphere and social context. <strong>Character voice</strong> is the distinctive way a character speaks or thinks, shaped by personality, age, experience, mood and situation.</p>
+ <p>Use sensory details—sight, sound, smell, touch and taste—selectively. Give characters different vocabulary, sentence lengths and speech habits without relying on stereotypes.</p>
+ <h3>Story endings</h3>
+ <ul><li><strong>Resolved ending:</strong> The central conflict is settled.</li><li><strong>Open ending:</strong> The reader is left to interpret what may happen next.</li><li><strong>Twist ending:</strong> New information changes the reader's understanding.</li><li><strong>Circular ending:</strong> The story returns to an image, place or idea from the opening.</li><li><strong>Reflective ending:</strong> The character considers what has changed.</li></ul>
+ <h3>Creating dialogue</h3>
+ <p>Start a new paragraph when the speaker changes. Use quotation marks consistently according to the style taught in class. Place punctuation correctly and use dialogue tags where they help the reader.</p>
+ <div class="example"><span class="example-label">Dialogue example</span><p>“You heard it too?” Mira asked.<br>Jonah nodded. “From the old stairwell.”<br>“Then we should tell someone.”</p></div>
+ <h3>Writing a story: final checklist</h3><ul><li>Does the opening establish a clear situation?</li><li>Does the character have a goal or problem?</li><li>Are sentence structures varied intentionally?</li><li>Does the setting influence events?</li><li>Does dialogue reveal character or move the plot?</li><li>Does the ending feel connected to the story?</li></ul>`
+},
+{
+ id:"film",number:"04",icon:"🎬",title:"Film and Fame",
+ short:"Explore heroes, grammar, newspaper articles, film reviews and clauses.",
+ description:"Develop media literacy, narrative prediction, journalism and review-writing skills.",
+ content:`
+ <h2>Meeting Your Hero: predicting a story</h2>
+ <p>Prediction means using clues to make a reasoned guess about what may happen next. Consider the title, images, character behaviour, setting, conflict and earlier events.</p>
+ <h3>How to make a supported prediction</h3>
+ <ol><li>Identify a clue from the text or image.</li><li>Connect it to what you already know.</li><li>Explain what you think may happen.</li><li>Give a reason for your prediction.</li></ol>
+ <div class="example"><span class="example-label">Prediction frame</span><p>I predict that ______ because the detail ______ suggests ______.</p></div>
+ <h2>Newspaper article writing</h2>
+ <p>A newspaper article reports an event or issue for a particular readership. It aims to communicate important information clearly and efficiently.</p>
+ <h3>Headline writing</h3>
+ <ul><li>Be concise and specific.</li><li>Use active verbs where suitable.</li><li>Highlight the central news angle.</li><li>Avoid misleading claims or sensationalism.</li></ul>
+ <div class="example"><span class="example-label">Headline example</span><p>Students Launch Community Garden to Support Local Wildlife</p></div>
+ <h3>Article structure</h3>
+ <ol><li><strong>Headline:</strong> Summarises the main news.</li><li><strong>Byline:</strong> Names the writer when required.</li><li><strong>Lead paragraph:</strong> Gives the most important information.</li><li><strong>Body:</strong> Adds details, background, evidence and quotations.</li><li><strong>Ending:</strong> Provides a relevant final detail or next step.</li></ol>
+ <h3>The 5 Ws and 1 H</h3>
+ <p>Who? What? When? Where? Why? How? These questions help a writer identify the essential information. Not every article answers every question immediately, but the reader should understand the central event.</p>
+ <h3>News language</h3><ul><li>Use clear, factual language.</li><li>Attribute quotations to their speakers.</li><li>Separate confirmed facts from allegations or opinions.</li><li>Use paragraphs to organise information.</li><li>Check names, dates, spelling and punctuation.</li></ul>
+ <h2>Reviewing films and books</h2>
+ <p>A review evaluates a creative work and explains the reviewer's judgement using reasons and examples. A review is not simply a plot summary.</p>
+ <h3>Elements of a review</h3>
+ <ul><li>Title and basic details of the work.</li><li>Brief introduction and overall impression.</li><li>Short, spoiler-conscious summary.</li><li>Discussion of relevant elements.</li><li>Specific examples supporting opinions.</li><li>Conclusion and suitable audience recommendation.</li></ul>
+ <h3>Film-review elements</h3>
+ <p>Consider acting, characters, dialogue, direction, cinematography, editing, sound, music, setting, pacing and themes. Discuss only elements relevant to your evaluation.</p>
+ <h3>Review structure</h3>
+ <p><strong>Opening:</strong> Identify the film or book and give an initial response.<br><strong>Overview:</strong> Introduce the premise without retelling everything.<br><strong>Analysis:</strong> Discuss strengths and limitations with examples.<br><strong>Conclusion:</strong> Give a balanced final judgement and identify the audience who may enjoy it.</p>
+ <div class="example"><span class="example-label">Review sentence frame</span><p>The film creates a tense atmosphere through its careful use of sound and lighting. However, the rushed final scene leaves an important character's decision underdeveloped.</p></div>
+ <h2>Clauses and conjunctions</h2>
+ <p>An <strong>independent clause</strong> expresses a complete thought and can stand alone. A <strong>dependent clause</strong> has a subject and verb but depends on another clause to complete its meaning.</p>
+ <div class="example"><span class="example-label">Clause example</span><p>Independent: “The audience applauded.”<br>Dependent: “Although the performance was short...”<br>Combined: “Although the performance was short, the audience applauded.”</p></div>
+ <h3>Coordinating conjunctions</h3>
+ <p>FANBOYS: <strong>for, and, nor, but, or, yet, so.</strong> They can join elements of equal grammatical status. When joining two independent clauses, a comma normally comes before the conjunction.</p>
+ <h3>Subordinating conjunctions</h3>
+ <p>Examples include although, because, since, when, while, if, unless, before, after and whereas. They introduce dependent clauses and show relationships such as time, reason, condition or contrast.</p>
+ <h3>Common mistakes</h3><ul><li>Avoid comma splices between independent clauses.</li><li>Do not leave a dependent clause accidentally unfinished.</li><li>Use evidence to support opinions in reviews.</li><li>Do not invent quotations or present guesses as confirmed news.</li></ul>`
+},
+{
+ id:"small",number:"05",icon:"✦",title:"Small but Perfect",
+ short:"Master flash fiction, symbolism, time adverbials, haiku and imagist poetry.",
+ description:"Discover how concise writing can create powerful images, meaning and emotion.",
+ content:`
+ <h2>Flash fiction</h2>
+ <p>Flash fiction is a very short work of fiction that creates a complete or suggestive narrative using carefully chosen details. There is no single universal word limit; follow the limit set by your teacher.</p>
+ <h3>Features of flash fiction</h3>
+ <ul><li>Very concise language.</li><li>A focused character, moment or conflict.</li><li>Few settings and characters.</li><li>Meaningful details rather than lengthy explanation.</li><li>A strong implication, change, reveal or ending.</li></ul>
+ <h3>Writing flash fiction</h3>
+ <ol><li>Start with an intriguing situation or image.</li><li>Choose one central moment or conflict.</li><li>Remove details that do not contribute.</li><li>Use precise nouns and active verbs.</li><li>Let readers infer some information.</li><li>End with a meaningful shift, image or discovery.</li></ol>
+ <div class="example"><span class="example-label">Original microfiction example</span><p>Every evening, the lighthouse blinked twice. Tonight, it blinked three times. On the shore, the old keeper smiled. At last, someone had answered.</p></div>
+ <h2>Symbols and symbolism</h2>
+ <p>A <strong>symbol</strong> is an object, action, image or detail that represents an idea beyond its literal meaning. <strong>Symbolism</strong> is the use of symbols to develop themes, emotions or character meaning.</p>
+ <table><tr><th>Possible symbol</th><th>Possible association</th></tr><tr><td>Light</td><td>Hope, knowledge or discovery</td></tr><tr><td>Storm</td><td>Conflict, uncertainty or change</td></tr><tr><td>Open door</td><td>Opportunity or transition</td></tr><tr><td>Broken clock</td><td>Disrupted time or memory</td></tr></table>
+ <p>These are possibilities, not fixed meanings. Interpret a symbol using its context, repetition and relationship to the characters or themes.</p>
+ <h2>Adverbials of time</h2>
+ <p>An adverbial of time tells the reader when, how often or for how long an action happens. It may be a single adverb, a phrase or a clause.</p>
+ <ul><li><strong>When:</strong> Yesterday, at midnight, after lunch.</li><li><strong>How often:</strong> Frequently, every morning, once a week.</li><li><strong>How long:</strong> For several minutes, throughout the afternoon.</li><li><strong>Time clause:</strong> When the bell rang, everyone stood.</li></ul>
+ <p>Time adverbials can establish sequence, create pace and help readers follow events. Vary sentence openings rather than beginning every sentence with “Then”.</p>
+ <h2>Haiku poetry</h2>
+ <p>Haiku is a short poetic form associated with Japanese literary tradition. English-language classroom haiku often use a 5–7–5 syllable pattern, although this is an adaptation and not a complete description of Japanese haiku.</p>
+ <h3>Common features</h3><ul><li>A concise observation of nature or a moment.</li><li>Attention to seasons, change or sensory detail.</li><li>A contrast or shift in perception.</li><li>Carefully selected language and imagery.</li></ul>
+ <div class="example"><span class="example-label">Original classroom-style haiku</span><p>Rain taps on the glass (5)<br>Small clouds wander through the hills (7)<br>Daylight fills the room (5)</p></div>
+ <h2>Imagist poetry</h2>
+ <p>Imagism was a modernist movement that valued precise imagery, clear language and economy of expression. Imagist poets aimed to present a concrete image directly rather than explain it with unnecessary abstraction.</p>
+ <h3>Key principles</h3><ul><li>Use precise, concrete words.</li><li>Present a clear image.</li><li>Remove unnecessary words.</li><li>Use rhythm and line breaks deliberately.</li><li>Allow the image to suggest meaning.</li></ul>
+ <div class="example"><span class="example-label">Original image-focused lines</span><p>A red leaf<br>turns once<br>in the empty street.</p></div>
+ <h3>Revision checklist</h3><ul><li>Can a reader picture the image?</li><li>Have I removed unnecessary words?</li><li>Does each detail contribute?</li><li>Does the ending leave a meaningful impression?</li></ul>`
+},
+{
+ id:"unusual",number:"06",icon:"🎓",title:"Unusual Education",
+ short:"Explore unusual learning, connectives, school-uniform arguments and blog analysis.",
+ description:"Develop critical reading, persuasive writing and the ability to analyse online content.",
+ content:`
+ <h2>Unusual education</h2>
+ <p>Education can take place in many environments: classrooms, museums, outdoor spaces, workplaces, online platforms and community projects. An unusual learning experience may challenge conventional expectations about where, when or how learning happens.</p>
+ <h3>Questions for analysing an unusual learning experience</h3>
+ <ul><li>Where does learning take place?</li><li>Who teaches, guides or supports the learner?</li><li>What skills or knowledge are developed?</li><li>How does the experience differ from a conventional classroom?</li><li>What are its benefits and possible limitations?</li></ul>
+ <h3>Balanced evaluation</h3>
+ <p>Consider access, safety, resources, collaboration, independence, feedback and the needs of different learners. Support claims with details rather than assuming one approach suits everyone.</p>
+ <h2>Connectives</h2>
+ <p>Connectives are words or phrases that link ideas and show relationships between them. They help readers follow the logic of a text.</p>
+ <table><tr><th>Purpose</th><th>Examples</th></tr><tr><td>Addition</td><td>Furthermore, also, in addition</td></tr><tr><td>Contrast</td><td>However, whereas, on the other hand</td></tr><tr><td>Cause and effect</td><td>Therefore, consequently, as a result</td></tr><tr><td>Sequence</td><td>First, next, finally</td></tr><tr><td>Example</td><td>For example, such as, for instance</td></tr><tr><td>Conclusion</td><td>In conclusion, overall, to summarise</td></tr></table>
+ <p>Choose connectives according to meaning. Do not insert them mechanically at the beginning of every sentence.</p>
+ <h2>School uniform: building an argument</h2>
+ <p>A persuasive argument presents a clear viewpoint, supports it with reasons and evidence, considers other perspectives and reaches a logical conclusion.</p>
+ <h3>Possible arguments supporting uniforms</h3><ul><li>They may simplify some morning clothing decisions.</li><li>They can help establish a shared school identity.</li><li>They may reduce visible differences in everyday clothing, although they do not remove all social inequalities.</li></ul>
+ <h3>Possible arguments questioning uniforms</h3><ul><li>Uniform costs can place pressure on some families.</li><li>Strict rules may limit individual expression.</li><li>Comfort, climate, accessibility and religious needs should be considered.</li></ul>
+ <h3>Balanced paragraph structure</h3>
+ <p><strong>Point:</strong> State your argument.<br><strong>Evidence or example:</strong> Give a relevant reason or detail.<br><strong>Explanation:</strong> Explain how it supports your point.<br><strong>Counterpoint:</strong> Recognise a reasonable alternative view.<br><strong>Link:</strong> Connect back to your overall position.</p>
+ <div class="example"><span class="example-label">Model argument paragraph</span><p>School uniforms can help create a shared sense of identity because students wear clothing associated with their school community. However, uniform policies should consider affordability and comfort. A practical policy can preserve a sense of belonging while allowing reasonable flexibility.</p></div>
+ <h2>Blog analysis</h2>
+ <p>A blog is an online publication that may share personal experiences, information, opinions, reviews or advice. Blog styles vary according to the writer, topic and audience.</p>
+ <h3>What to analyse</h3>
+ <ul><li><strong>Purpose:</strong> To inform, entertain, persuade, reflect or promote.</li><li><strong>Audience:</strong> Who is likely to read it?</li><li><strong>Tone:</strong> Formal, conversational, humorous, serious or reflective.</li><li><strong>Structure:</strong> Title, introduction, sections, images, links and conclusion.</li><li><strong>Language:</strong> First person, direct address, anecdotes, questions and connectives.</li><li><strong>Evidence:</strong> Are claims supported? Are sources identified?</li><li><strong>Reliability:</strong> Is the writer qualified? Is information current and verifiable?</li></ul>
+ <h3>How to write a blog post</h3><ol><li>Choose a specific topic and audience.</li><li>Create an engaging, accurate title.</li><li>Open with a question, observation or short anecdote.</li><li>Organise ideas into clear sections.</li><li>Use a consistent voice and relevant examples.</li><li>Include links or sources when making factual claims.</li><li>Finish with a reflection, summary or question for readers.</li></ol>
+ <div class="callout"><strong>Remember:</strong><p>A personal blog can contain opinions, but factual claims should still be checked. A confident tone does not automatically make information reliable.</p></div>`
+}
+];
+
+const grammar = [
+ ["Sentence types","Grammar","Learn simple, compound, complex and compound-complex sentences.","hey"],
+ ["Sentence openings","Style","Vary openings using adverbs, phrases, clauses, dialogue and short statements.","hey"],
+ ["Common and proper nouns","Grammar","Identify general naming words and specific names.","film"],
+ ["Main and auxiliary verbs","Grammar","Understand lexical verbs and helping verbs.","film"],
+ ["Verb phrases","Grammar","Explore how main and auxiliary verbs work together.","film"],
+ ["Clauses","Grammar","Distinguish independent and dependent clauses.","film"],
+ ["Conjunctions","Grammar","Use coordinating and subordinating conjunctions accurately.","film"],
+ ["Connectives","Cohesion","Link ideas through addition, contrast, cause, sequence and conclusion.","unusual"],
+ ["Adverbials of time","Style","Show when, how often or for how long an action occurs.","small"],
+ ["Character voice","Writing","Use dialogue and word choice to create distinctive voices.","hey"],
+ ["Symbolism","Literature","Interpret objects and images in context.","small"],
+ ["Headline writing","Media","Create concise, accurate and informative headlines.","film"]
+];
+
+const writingTasks = [
+ {title:"Public Service Announcement",icon:"📢",prompt:"Create a PSA encouraging your school community to reduce plastic waste. Include a headline, issue, practical actions and a memorable slogan."},
+ {title:"Adventure Story",icon:"🧭",prompt:"A student discovers a map hidden inside an old library book. Write an adventure story in which the map leads to an unexpected challenge."},
+ {title:"Dialogue",icon:"💬",prompt:"Two friends disagree about whether to enter an abandoned theatre. Use dialogue to reveal their different personalities and build tension."},
+ {title:"Newspaper Article",icon:"📰",prompt:"Your school has opened a community garden. Write a newspaper article explaining what happened, who was involved and why it matters."},
+ {title:"Film Review",icon:"🎬",prompt:"Review a film you know well. Discuss its story, characters, acting, sound or visuals, and explain who might enjoy it."},
+ {title:"Flash Fiction",icon:"✦",prompt:"Write a very short story beginning with: “The message arrived twenty years too late.” Focus on one central moment and a meaningful ending."},
+ {title:"Haiku",icon:"🌿",prompt:"Write an original classroom-style haiku inspired by a changing season. Try a 5–7–5 syllable pattern and use concrete imagery."},
+ {title:"Imagist Poem",icon:"🖋️",prompt:"Write a short image-focused poem about an ordinary object. Use precise details and remove unnecessary explanation."},
+ {title:"Blog Post",icon:"💻",prompt:"Write a blog post about an unusual learning experience. Include a title, personal reflection, clear sections and a conclusion."},
+ {title:"School Uniform Argument",icon:"🎓",prompt:"Write a balanced argument about school uniform policies. Present a clear viewpoint, reasons, a counterpoint and a conclusion."}
+];
+
+const quizData = [
+ {q:"What is the main purpose of a Public Service Announcement?",a:["To tell a fictional adventure","To inform or encourage public action","To review a film"],correct:1,why:"A PSA communicates an important public message and often encourages a practical action."},
+ {q:"Which feature is common in an adventure story?",a:["A goal and obstacles","Only a list of facts","No conflict or change"],correct:0,why:"Adventure stories commonly involve a mission, challenges, uncertainty and resolution."},
+ {q:"Which detail can reveal character?",a:["Only the character's name","Actions, dialogue and decisions","The page number"],correct:1,why:"Writers develop characters through actions, speech, thoughts, relationships and choices."},
+ {q:"Which is a complex sentence?",a:["The bell rang.","The bell rang, and we left.","When the bell rang, we left."],correct:2,why:"A complex sentence contains an independent clause and at least one dependent clause."},
+ {q:"Which is a proper noun?",a:["city","teacher","London"],correct:2,why:"London is the specific name of a place and is capitalised."},
+ {q:"Which word is an auxiliary verb in “She has finished”?",a:["She","has","finished"],correct:1,why:"Has helps the main verb finished form the present perfect verb phrase."},
+ {q:"What does a newspaper lead paragraph usually do?",a:["Gives the central news information","Lists every source alphabetically","Reveals the writer's unrelated opinion"],correct:0,why:"The lead gives readers the most important information early."},
+ {q:"What should a film review include?",a:["Only the ending","A judgement supported by examples","A complete scene-by-scene transcript"],correct:1,why:"A review evaluates a work and supports opinions with relevant details."},
+ {q:"Which is a subordinating conjunction?",a:["Although","And","Or"],correct:0,why:"Although introduces a dependent clause and can express contrast."},
+ {q:"What is symbolism?",a:["Using an image or object to suggest a wider idea","Listing events in date order","Writing every sentence as a question"],correct:0,why:"A symbol carries meaning beyond its literal presence, interpreted in context."},
+ {q:"What is a common feature of flash fiction?",a:["Long descriptions of many unrelated characters","Concise language and a focused moment","A required fixed word count worldwide"],correct:1,why:"Flash fiction is brief and carefully focused; word limits vary by assignment."},
+ {q:"What does an adverbial of time tell us?",a:["When, how often or how long","Only who performed an action","The spelling of a noun"],correct:0,why:"Time adverbials express timing, frequency or duration."},
+ {q:"Which is a common classroom haiku pattern in English?",a:["5–7–5 syllables","10–10–10 words","Three paragraphs of equal length"],correct:0,why:"Many English classroom exercises use a 5–7–5 syllable pattern, an adaptation of the Japanese form."},
+ {q:"What is an important feature of imagist poetry?",a:["Precise, concrete imagery","Explaining every possible meaning","Using as many adjectives as possible"],correct:0,why:"Imagism values direct presentation, precise images and economy of language."},
+ {q:"What should a blog analysis consider?",a:["Purpose, audience, tone and reliability","Only the background colour","Only the writer's username"],correct:0,why:"Analysing a blog involves its purpose, intended readers, language, structure and credibility."}
+];
+
+let completed = new Set(JSON.parse(localStorage.getItem("englishHubCompleted") || "[]"));
+let currentTopic = null;
+let selectedQuiz = {};
+let currentWriting = "";
+
+function saveProgress(){
+ localStorage.setItem("englishHubCompleted",JSON.stringify([...completed]));
+ updateProgress();
+}
+function updateProgress(){
+ const count=completed.size;
+ const percent=Math.round(count/topics.length*100);
+ document.getElementById("sideProgress").style.width=percent+"%";
+ document.getElementById("sideProgressText").textContent=percent+"% completed";
+ document.getElementById("sideCount").textContent=count+"/"+topics.length;
+ document.getElementById("homeProgress").textContent=percent+"%";
+}
+
+function cardHTML(t){
+ const done=completed.has(t.id);
+ return `<button class="topic-card" style="text-align:left;color:inherit;cursor:pointer" onclick="openTopic('${t.id}')">
+  <div class="card-top"><div class="card-icon">${t.icon}</div><span class="card-number">${t.number||"✦"} / TERM 1</span></div>
+  <h3>${t.title}</h3><p>${t.short}</p>
+  <div class="card-bottom"><span>${done?'<span class="done-mark">✓ Completed</span>':'Explore study guide'}</span><span class="card-arrow">↗</span></div>
+ </button>`;
+}
+function renderCards(){
+ const html=topics.map(cardHTML).join("");
+ document.getElementById("homeCards").innerHTML=html;
+ document.getElementById("lessonCards").innerHTML=html;
+ document.getElementById("grammarCards").innerHTML=grammar.map((g,i)=>`
+  <button class="topic-card" style="text-align:left;color:inherit" onclick="openTopic('${g[3]}')">
+   <div class="card-top"><div class="card-icon">Aa</div><span class="card-number">GRAMMAR ${String(i+1).padStart(2,"0")}</span></div>
+   <h3>${g[0]}</h3><p>${g[2]}</p><div class="card-bottom"><span>Study concept</span><span class="card-arrow">↗</span></div>
+  </button>`).join("");
+ document.getElementById("writingCards").innerHTML=writingTasks.map((w,i)=>`
+  <button class="topic-card" style="text-align:left;color:inherit" onclick="chooseWriting(${i})">
+   <div class="card-top"><div class="card-icon">${w.icon}</div><span class="card-number">WRITING ${String(i+1).padStart(2,"0")}</span></div>
+   <h3>${w.title}</h3><p>${w.prompt}</p><div class="card-bottom"><span>Start challenge</span><span class="card-arrow">↗</span></div>
+  </button>`).join("");
+}
+function showPage(page){
+ const pages=["home","lessons","topic","grammar","writing","quiz"];
+ pages.forEach(p=>document.getElementById(p+"Page").classList.toggle("hidden",p!==page));
+ document.querySelectorAll(".nav-link").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ const names={home:"Dashboard",lessons:"All Lessons",topic:"Study Guide",grammar:"Grammar Lab",writing:"Writing Studio",quiz:"Knowledge Quiz"};
+ document.getElementById("crumb").textContent=names[page]||"Learning";
+ document.getElementById("sidebar").classList.remove("open");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function openTopic(id){
+ const t=topics.find(x=>x.id===id);
+ if(!t)return;
+ currentTopic=id;
+ showPage("topic");
+ document.getElementById("lessonEyebrow").textContent="TERM 1 · SECTION "+t.number;
+ document.getElementById("lessonTitle").textContent=t.icon+" "+t.title;
+ document.getElementById("lessonDescription").textContent=t.description;
+ document.getElementById("lessonContent").innerHTML=t.content;
+ const btn=document.getElementById("completeBtn");
+ btn.textContent=completed.has(id)?"✓ Completed — Mark as not complete":"✓ Mark section complete";
+ document.querySelectorAll(".nav-link").forEach(b=>b.classList.toggle("active",b.dataset.topic===id));
+}
+function toggleComplete(){
+ if(!currentTopic)return;
+ if(completed.has(currentTopic))completed.delete(currentTopic);
+ else completed.add(currentTopic);
+ saveProgress();renderCards();
+ document.getElementById("completeBtn").textContent=completed.has(currentTopic)?"✓ Completed — Mark as not complete":"✓ Mark section complete";
+}
+function filterCards(inputId,containerId){
+ const q=document.getElementById(inputId).value.toLowerCase().trim();
+ const cards=[...document.getElementById(containerId).children];
+ cards.forEach(card=>card.classList.toggle("hidden",!card.innerText.toLowerCase().includes(q)));
+}
+document.getElementById("homeSearch").addEventListener("input",()=>filterCards("homeSearch","homeCards"));
+document.getElementById("lessonSearch").addEventListener("input",()=>filterCards("lessonSearch","lessonCards"));
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+document.querySelectorAll(".nav-link").forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  if(btn.dataset.topic)openTopic(btn.dataset.topic);
+  else showPage(btn.dataset.page);
+ });
+});
+
+function chooseWriting(i){
+ const task=writingTasks[i];
+ currentWriting=task.title;
+ document.getElementById("writingTitle").textContent=task.icon+" "+task.title;
+ document.getElementById("writingPrompt").textContent=task.prompt;
+ document.getElementById("writingText").value="";
+ updateWordCount();
+ document.getElementById("writingPractice").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function updateWordCount(){
+ const text=document.getElementById("writingText").value.trim();
+ const words=text?text.split(/\s+/).length:0;
+ document.getElementById("wordCount").textContent=words+" words";
+}
+document.getElementById("writingText").addEventListener("input",updateWordCount);
+function copyWriting(){
+ const text=document.getElementById("writingText").value;
+ if(!text.trim()){alert("Write something first!");return;}
+ if(navigator.clipboard && navigator.clipboard.writeText){
+  navigator.clipboard.writeText(text).then(()=>alert("Writing copied!")).catch(()=>fallbackCopy(text));
+ }else fallbackCopy(text);
+}
+function fallbackCopy(text){
+ const area=document.getElementById("writingText");
+ area.select();
+ try{document.execCommand("copy");alert("Writing copied!");}
+ catch(e){alert("Select and copy your writing manually.");}
+}
+function clearWriting(){
+ if(confirm("Clear your writing?")){
+  document.getElementById("writingText").value="";
+  updateWordCount();
+ }
+}
+
+function renderQuiz(){
+ const root=document.getElementById("quizQuestions");
+ root.innerHTML=quizData.map((q,i)=>`
+ <div class="quiz-question" id="question${i}">
+  <h3>${i+1}. ${q.q}</h3>
+  ${q.a.map((a,j)=>`<button class="answer" data-q="${i}" data-a="${j}" onclick="selectAnswer(${i},${j})">${String.fromCharCode(65+j)}. ${a}</button>`).join("")}
+  <div class="quiz-feedback" id="feedback${i}"></div>
+ </div>`).join("");
+ selectedQuiz={};
+ document.getElementById("quizResult").style.display="none";
+}
+function selectAnswer(q,a){
+ selectedQuiz[q]=a;
+ document.querySelectorAll(`[data-q="${q}"]`).forEach(b=>b.classList.toggle("selected",Number(b.dataset.a)===a));
+ document.getElementById("feedback"+q).textContent="";
+}
+function submitQuiz(){
+ let score=0;
+ quizData.forEach((q,i)=>{
+  const chosen=selectedQuiz[i];
+  const buttons=document.querySelectorAll(`[data-q="${i}"]`);
+  buttons.forEach(b=>{
+   const a=Number(b.dataset.a);
+   b.classList.remove("selected");
+   if(a===q.correct)b.classList.add("correct");
+   if(a===chosen && chosen!==q.correct)b.classList.add("wrong");
+  });
+  if(chosen===q.correct)score++;
+  document.getElementById("feedback"+i).textContent=
+   (chosen===q.correct?"Correct! ":"Review: ")+q.why;
+ });
+ const result=document.getElementById("quizResult");
+ result.style.display="block";
+ result.innerHTML=`<div class="eyebrow">Your result</div><strong>${score} / ${quizData.length}</strong><p>${score===quizData.length?"Outstanding! You answered every question correctly.":score>=11?"Great work! Review the explanations to strengthen your understanding.":score>=7?"Good effort! Revisit the relevant lessons and try again.":"Keep practising. Use the lesson library to revise and then retake the quiz."}</p>`;
+ result.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function resetQuiz(){renderQuiz();document.getElementById("quizPage").scrollIntoView({behavior:"smooth"});}
+
+renderCards();
+renderQuiz();
+updateProgress();
+</script>
+</body>
+</html>
